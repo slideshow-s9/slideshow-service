@@ -1,0 +1,33 @@
+
+<%= erb :'_editor_setup' %>
+
+
+<form id='noteform' action="#">
+  <button type="submit" formtarget="slideshow_s6"      formaction="slideshow-s6-blank/slides">Show S6 Blank</button>
+  <button type="submit" formtarget="slideshow_s6_pdf"  formaction="slideshow-s6-blank/slides.pdf">Show S6 Blank (PDF)</button>
+  <button type="submit" formtarget="slideshow_deckjs"  formaction="slideshow-deck.js/slides">Show Deck.js</button>
+</form>
+
+
+<table width="100%">
+<tr>  
+  <td>
+    <div style="font-size: 80%;">
+      Options: <br>
+        <a id='input-toggle' href='#'>[ Use White Color Theme ]</a>
+    </div>
+  </td>
+<div>
+
+
+
+<table width='100%'>
+ <tr>
+   <td>
+      <div id='input'>
+         <!-- note: use text for name - will get used for get url param in form submit -->
+        <textarea id='note' name='text' form='noteform' class='black'></textarea>
+      </div>
+   </td>
+ </tr>
+</table>
