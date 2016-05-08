@@ -77,6 +77,16 @@ class Service < Sinatra::Base
 
    render_slideshow( text, 'slideshow-s6-blank/slides.pdf.html' )
   end
+
+
+  get '/slideshow-deck.js/slides' do
+  
+   text = params.delete('text') || welcome_sample
+   ## todo - check if ascii-7bit encoding ??
+   ##  use (always) utf8 for now
+
+   render_slideshow( text, 'slideshow-deck.js/slides.html' )
+  end
   
 
   get '/' do
