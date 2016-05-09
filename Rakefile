@@ -14,7 +14,7 @@ Hoe.spec 'slideshow-service' do
   self.email   = 'wwwmake@googlegroups.com'
   
   self.extra_deps = [
-    ['slideshow-models', '>= 3.1.1'],  ## slideshow markdown converter
+    ['slideshow-models', '>= 3.2.0'],  ## slideshow markdown converter
     ['sinatra'],
     ['liquid'],
   ]

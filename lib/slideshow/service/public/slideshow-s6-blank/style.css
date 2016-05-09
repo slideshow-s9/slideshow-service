@@ -9,7 +9,10 @@ a:link, a:visited { color: black; }
 
 .slide h1 {  text-align: center; }
 
-.slide h1.fullscreen { position: absolute;
+/**  note: make h1 slides fullscreen by default
+ *     was .slide h1.fullscreen
+ **/
+.slide h1 { position: absolute;
                        top: 40%;
                        width: 100%; }
 
@@ -17,7 +20,12 @@ a:link, a:visited { color: black; }
 .slide h1.hidden     { display: none; }
 
 
+
 .slide h2 { font-size: 28pt;  }
+/** note: make h2 slides the new "h1" e.g. center like h1
+ **/
+.slide h2 { text-align: center; }
+
 
 h3 { font-size: 25pt;  }
 
