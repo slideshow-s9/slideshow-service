@@ -14,3 +14,15 @@
 - [ ] add opts for --h1 and --h2 slide breaks
 
 
+---
+
+
+slidy fix (encoding error?)
+
+```
+Successfully installed slideshow-service-0.3.0
+Parsing documentation for slideshow-service-0.3.0
+unable to convert "\xA9" from ASCII-8BIT to UTF-8 for lib/slideshow/service/public/slideshow-slidy/help/help.html, skipping
+Installing ri documentation for slideshow-service-0.3.0
+Done installing documentation for slideshow-service after 12 seconds
+```
