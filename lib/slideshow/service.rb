@@ -28,7 +28,7 @@ require 'slideshow/service/version'   # let version always go first
 
 
 module Slideshow
-  
+
 class Service < Sinatra::Base
 
 
@@ -38,7 +38,7 @@ class Service < Sinatra::Base
   puts "[boot] slideshow-service - setting public folder to: #{PUBLIC_FOLDER}"
   puts "[boot] slideshow-service - setting views folder to: #{VIEWS_FOLDER}"
 
-  set :public_folder, PUBLIC_FOLDER   # set up the static dir (with images/js/css inside)   
+  set :public_folder, PUBLIC_FOLDER   # set up the static dir (with images/js/css inside)
   set :views,         VIEWS_FOLDER    # set up the views dir
 
   set :static, true   # set up static file routing
@@ -50,7 +50,7 @@ class Service < Sinatra::Base
 
   get '/s6' do
     ## todo/check:  works with .html too (e.g. gets hit before public file ?? check why? why not??)
-    redirect to('/slideshow-s6-blank/slides') 
+    redirect to('/slideshow-s6-blank/slides')
   end
 
   ###
@@ -60,7 +60,7 @@ class Service < Sinatra::Base
 
 
   get '/slideshow-s6-blank/slides' do
-  
+
    text = params.delete('text') || welcome_sample
    ## todo - check if ascii-7bit encoding ??
    ##  use (always) utf8 for now
@@ -70,7 +70,7 @@ class Service < Sinatra::Base
 
 
   get '/slideshow-s6-blank/slides.pdf' do
-  
+
    text = params.delete('text') || welcome_sample
    ## todo - check if ascii-7bit encoding ??
    ##  use (always) utf8 for now
@@ -80,14 +80,43 @@ class Service < Sinatra::Base
 
 
   get '/slideshow-deck.js/slides' do
-  
+
    text = params.delete('text') || welcome_sample
    ## todo - check if ascii-7bit encoding ??
    ##  use (always) utf8 for now
 
    render_slideshow( text, 'slideshow-deck.js/slides.html' )
   end
-  
+
+  get '/slideshow-csss/slides' do
+
+   text = params.delete('text') || welcome_sample
+   ## todo - check if ascii-7bit encoding ??
+   ##  use (always) utf8 for now
+
+   render_slideshow( text, 'slideshow-csss/slides.html' )
+  end
+
+
+  get '/slideshow-slidy/slides.blank' do
+
+   text = params.delete('text') || welcome_sample
+   ## todo - check if ascii-7bit encoding ??
+   ##  use (always) utf8 for now
+
+   render_slideshow( text, 'slideshow-slidy/slides.blank.html' )
+  end
+
+
+  get '/slideshow-slidy/slides.w3c' do
+
+   text = params.delete('text') || welcome_sample
+   ## todo - check if ascii-7bit encoding ??
+   ##  use (always) utf8 for now
+
+   render_slideshow( text, 'slideshow-slidy/slides.w3c.html' )
+  end
+
 
   get '/' do
     # note: allow optional params e.g. text and opts
@@ -119,44 +148,44 @@ private
   def render_slideshow( text, template_path )
 
    opts    = Slideshow::Opts.new
-   
+
    ## opts.verbose      = true     # turn on (verbose) debug output
    ## opts.output_path  = "#{Slideshow.root}/tmp/#{Time.now.to_i}"
 
    config  = Slideshow::Config.new( opts )
    config.load
    config.dump
-  
+
    b = Slideshow::Build.new( config )
    deck = b.create_deck_from_string( text )
 
    pp deck
- 
+
    puts "content:"
    pp deck.content
- 
+
    ###########################################
    ## setup hash for binding
    assigns = { 'name'    => 'test',    ## todo/check: what name to use???
-              'headers' => HeadersDrop.new( b.headers ), 
+              'headers' => HeadersDrop.new( b.headers ),
               'content' => deck.content,
               'slides'  => deck.slides.map { |slide| SlideDrop.new(slide) },  # strutured content - use LiquidDrop - why? why not?
              }
- 
+
   #
   #  html = "<p>hello from s6</p>"
   #  html
-  
+
     ## e.g. :s6 == s6.liquid file/template
-  
+
     tpl = LiquidTemplate.from_public( template_path )
-    tpl.render( assigns ) 
+    tpl.render( assigns )
   end
 
 
   ## use our own litter liquid template handler
   ##   works like "original" in pakman template manager used by slideshow
-  
+
 class LiquidTemplate
 
   def self.from_file( path )
@@ -170,7 +199,7 @@ class LiquidTemplate
     puts "  Loading template (from builtin public) >#{path}<..."
     self.from_file( path )   ## note: pass along path as an option
   end
-  
+
   def initialize( text, opts={} )
     @template = Liquid::Template.parse( text )   # parses and compiles the template
   end
@@ -192,4 +221,3 @@ end #  module Slideshow
 
 # say hello
 puts SlideshowService.banner
-
